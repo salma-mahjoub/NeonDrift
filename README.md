@@ -15,18 +15,19 @@ Guide a glowing ball through a floating maze **by tilting your phone**, collect 
 Unity 6.6 · C# · URP · Input System · TextMeshPro · iOS (Xcode) · Git LFS on GitLab
 
 ## Project structure
-
+```
 Assets/_Project/
-├── Scenes/ MainScene
-├── Scripts/ Gameplay, UI, sensors (+ Editor/ build post-processing)
-├── Prefabs/ Orb
-└── Materials/ Neon materials, Physics Materials
-
+├── Scenes/      MainScene
+├── Scripts/     Gameplay, UI, sensors
+│   └── Editor/  iOS build post-processing
+├── Prefabs/     Orb
+└── Materials/   Neon materials, Physics Materials
+```
 
 ## Run it
-1. Open the project with Unity 6.6 (iOS Build Support module installed)
-2. Open `Assets/_Project/Scenes/MainScene` and press Play (keyboard / joystick in the editor)
-3. iOS: File → Build Profiles → iOS → Build, then run the Xcode project on a device
+1. Open the project with **Unity 6.6** (iOS Build Support module installed)
+2. Open `Assets/_Project/Scenes/MainScene` and press **Play** (keyboard / on-screen joystick in the editor)
+3. **iOS**: File → Build Profiles → iOS → Build, then run the generated Xcode project on a device
 
 ## Controls
 | Platform | Move | Jump | Dash | Zoom |
@@ -34,3 +35,7 @@ Assets/_Project/
 | iPhone | Tilt the phone | Jump button | Swipe | Pinch |
 | Mac / PC | WASD / arrows | Space | — | Scroll |
 | Gamepad | Left stick | South button | — | — |
+
+## What I learned
+Unity scene and component architecture, Transform and MonoBehaviour lifecycle, PhysX physics (forces, colliders, triggers),
+the Input System (actions, events, multi-device), responsive mobile UI, mobile sensors and haptics, and shipping an iOS build.

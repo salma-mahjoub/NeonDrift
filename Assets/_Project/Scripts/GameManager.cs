@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Application.targetFrameRate = 60;  // mobile : 30 FPS par défaut, on demande 60
+
     }
 
     void Start()

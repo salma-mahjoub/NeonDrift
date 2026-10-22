@@ -77,7 +77,9 @@ public class BallController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         float impact = collision.relativeVelocity.magnitude;
-        if (impact > bumpThreshold)
-            Debug.Log($"💥 Bump sur {collision.gameObject.name} (force {impact:F1})");
+
+        // Strong hits against walls only (landing on the floor should not vibrate)
+        if (impact > bumpThreshold * 2f && !collision.gameObject.name.Contains("Floor"))
+            Haptics.Pulse();
     }
 }

@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     public void CollectOrb()
     {
         OrbsCollected++;
+        Haptics.Pulse();  // short vibration when an orb is collected
         OrbsChanged?.Invoke(OrbsCollected, OrbsTotal);
         Debug.Log($"✨ Orb {OrbsCollected}/{OrbsTotal}");
 
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         if (State != GameState.Playing) return;  // ignore if already won or paused
         Debug.Log($"🏁 LEVEL COMPLETE in {ElapsedTime:F2} s");
         SetState(GameState.Won);
+        Haptics.Pulse();  // victory vibration
         LevelCompleted?.Invoke(ElapsedTime);
     }
 

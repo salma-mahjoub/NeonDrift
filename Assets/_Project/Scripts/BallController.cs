@@ -1,46 +1,63 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Contrôle de la bille au clavier (temporaire : au chapitre 6, ce sera l'inclinaison du téléphone)
+// Contrôle de la bille via les INPUT ACTIONS (abstraction : clavier, manette, tactile, XR…)
 [RequireComponent(typeof(Rigidbody))]
 public class BallController : MonoBehaviour
 {
     [Header("Mouvement")]
-    [SerializeField] private float moveForce = 12f;      // ForceMode.Force : poussée continue
-    [SerializeField] private float jumpImpulse = 3.5f;   // ForceMode.Impulse : coup unique
+    [SerializeField] private float moveForce = 12f;
+    [SerializeField] private float sprintMultiplier = 1.8f;
+    [SerializeField] private float jumpImpulse = 3.5f;
 
     [Header("Détection")]
     [SerializeField] private float groundCheckDistance = 0.4f;
     [SerializeField] private float bumpThreshold = 2f;
 
     private Rigidbody rb;
-    private Vector3 moveInput;      // fait le lien entre Update et FixedUpdate
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction sprintAction;
+
+    private Vector3 moveInput;
     private bool jumpRequested;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();  // une seule fois, et pas dans Update
+        rb = GetComponent<Rigidbody>();
+
+        // On récupère les actions par leur nom « ActionMap/Action »
+        moveAction   = InputSystem.actions.FindAction("Player/Move");
+        jumpAction   = InputSystem.actions.FindAction("Player/Jump");
+        sprintAction = InputSystem.actions.FindAction("Player/Sprint");
     }
 
-    // 1) LIRE les entrées : à chaque image
+    // ÉVÉNEMENTS : on s'abonne à l'activation, et on se désabonne TOUJOURS à la désactivation
+    void OnEnable()  => jumpAction.performed += OnJump;
+    void OnDisable() => jumpAction.performed -= OnJump;
+
+    // SONDAGE : pour une valeur continue (le déplacement), on lit à chaque image
     void Update()
     {
-        Keyboard kb = Keyboard.current;
-        if (kb == null) return;
+        Vector2 input = moveAction.ReadValue<Vector2>();     // (x, y) entre -1 et 1
+        moveInput = new Vector3(input.x, 0f, input.y);       // le Y de l'écran devient le Z du monde 3D
+        moveInput = Vector3.ClampMagnitude(moveInput, 1f);
 
-        float x = 0f, z = 0f;
-        if (kb.leftArrowKey.isPressed  || kb.aKey.isPressed) x -= 1f;
-        if (kb.rightArrowKey.isPressed || kb.dKey.isPressed) x += 1f;
-        if (kb.upArrowKey.isPressed    || kb.wKey.isPressed) z += 1f;
-        if (kb.downArrowKey.isPressed  || kb.sKey.isPressed) z -= 1f;
-
-        moveInput = new Vector3(x, 0f, z).normalized;  // normalized : la diagonale ne va pas plus vite
-
-        if (kb.spaceKey.wasPressedThisFrame && IsGrounded())
-            jumpRequested = true;
+        if (sprintAction.IsPressed())
+            moveInput *= sprintMultiplier;
     }
 
-    // 2) APPLIQUER les forces : à intervalle fixe, synchronisé avec la physique
+    // Appelée automatiquement quand l'action Jump est validée (performed)
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (IsGrounded())
+        {
+            jumpRequested = true;
+            Debug.Log($"🦘 Saut via : {context.control.device.displayName}");
+        }
+    }
+
+    // PHYSIQUE : les forces sont appliquées dans FixedUpdate
     void FixedUpdate()
     {
         rb.AddForce(moveInput * moveForce, ForceMode.Force);
@@ -52,13 +69,11 @@ public class BallController : MonoBehaviour
         }
     }
 
-    // RAYCAST : un rayon vers le bas pour savoir si la bille touche le sol
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance);
     }
 
-    // COLLISION : appelée au moment d'un impact avec un objet solide
     void OnCollisionEnter(Collision collision)
     {
         float impact = collision.relativeVelocity.magnitude;

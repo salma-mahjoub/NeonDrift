@@ -8,15 +8,9 @@ public class ExitPortal : MonoBehaviour
     private bool isOpen;
 
     void Start()
-{
-    if (openEffect == null)
     {
-        // « this » en 2e paramètre : un clic sur l'erreur sélectionne l'objet fautif dans la Hierarchy
-        Debug.LogError($"[ExitPortal] Le champ Open Effect est vide sur l'objet « {name} »", this);
-        return;  // on s'arrête proprement au lieu de planter
+        openEffect.SetActive(false);
     }
-    openEffect.SetActive(false);
-}
 
     public void Open()
     {

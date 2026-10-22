@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 1542625607257685913}
   - component: {fileID: 6585571812969275154}
   - component: {fileID: 6587835594662109778}
-  - component: {fileID: 3759921199117403824}
-  - component: {fileID: 6810642218933365363}
   - component: {fileID: 6690335079870442083}
-  - component: {fileID: 1505310838722121318}
   - component: {fileID: 6343924225537949111}
+  - component: {fileID: 7015375590985616220}
+  - component: {fileID: 3622452730493926253}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Untagged
@@ -111,55 +110,13 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3759921199117403824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792946147929052281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799fdb0231eee4d06bbbaa3f21d78ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rotator
-  degreesPerSecond: {x: 0, y: 90, z: 0}
-  space: 0
---- !u!114 &6810642218933365363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792946147929052281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799fdb0231eee4d06bbbaa3f21d78ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rotator
-  degreesPerSecond: {x: 0, y: 90, z: 0}
-  space: 0
 --- !u!114 &6690335079870442083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792946147929052281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799fdb0231eee4d06bbbaa3f21d78ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rotator
-  degreesPerSecond: {x: 0, y: 90, z: 0}
-  space: 0
---- !u!114 &1505310838722121318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,3 +144,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pulse
   amount: 0.12
   speed: 8
+--- !u!114 &7015375590985616220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792946147929052281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c74163c4ffc7487ab15949665144eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectible
+--- !u!114 &3622452730493926253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792946147929052281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499f7f7cfff174b9ead25a518b2aecec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hover
+  amplitude: 0.15
+  frequency: 0.8
